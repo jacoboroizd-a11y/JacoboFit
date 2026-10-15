@@ -11,6 +11,12 @@ public struct Ingredient: Codable, Hashable, Identifiable, Sendable {
     }
 }
 
+public struct RecipeSource: Codable, Hashable, Sendable {
+    public var title: String
+    public var url: URL
+    public init(title: String, url: URL) { self.title = title; self.url = url }
+}
+
 public struct RecipeData: Codable, Hashable, Identifiable, Sendable {
     public var id: UUID
     public var name: String
@@ -22,12 +28,13 @@ public struct RecipeData: Codable, Hashable, Identifiable, Sendable {
     public var nutrition: Nutrients
     public var ingredients: [Ingredient]
     public var steps: [String]
+    public var sources: [RecipeSource]?
     public init(id: UUID = UUID(), name: String, symbol: String = "fork.knife", servings: Int = 1,
                 minutes: Int = 20, difficulty: String = "Fácil", nutrition: Nutrients,
-                ingredients: [Ingredient], steps: [String]) {
+                ingredients: [Ingredient], steps: [String], sources: [RecipeSource]? = nil) {
         self.id = id; self.name = name; self.symbol = symbol; self.servings = servings
         self.minutes = minutes; self.difficulty = difficulty; self.nutrition = nutrition
-        self.ingredients = ingredients; self.steps = steps
+        self.ingredients = ingredients; self.steps = steps; self.sources = sources
     }
     public func scaled(to newServings: Int) throws -> Self {
         guard servings > 0, newServings > 0 else { throw NutritionError.invalidValue("porciones") }
@@ -73,8 +80,13 @@ public enum GroceryService {
 extension RecipeData {
     public func validate() throws {
         try nutrition.validate()
+        guard (sources ?? []).count <= 5, (sources ?? []).allSatisfy({ !$0.title.isEmpty && $0.url.scheme == "https" && $0.url.host != nil && $0.url.user == nil && $0.url.password == nil }) else {
+            throw NutritionError.invalidValue("fuente de receta")
+        }
         guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, servings > 0,
-              minutes > 0, !ingredients.isEmpty, !steps.isEmpty,
+              minutes > 0, !ingredients.isEmpty, ingredients.count <= 100, !steps.isEmpty, steps.count <= 30,
+              steps.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }),
+              Set(ingredients.map(\.id)).count == ingredients.count,
               ingredients.allSatisfy({ !$0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.unit.isEmpty && $0.quantity.isFinite && $0.quantity > 0 }) else {
             throw NutritionError.invalidValue("receta o ingredientes")
         }

@@ -67,17 +67,23 @@ import NutritionCore
     var nutritionData: Data
     var steps: [String]
     var favorite: Bool = false
+    var inFoodList: Bool = false
+    var shoppingServings: Int = 1
+    var isDraft: Bool = false
+    var sourcesData: Data?
     @Relationship(deleteRule: .cascade, inverse: \RecipeIngredient.recipe) var ingredients: [RecipeIngredient] = []
     init(_ data: RecipeData) throws {
         id = data.id; name = data.name; symbol = data.symbol; servings = data.servings
         minutes = data.minutes; difficulty = data.difficulty; steps = data.steps
+        sourcesData = try JSONEncoder().encode(data.sources)
         nutritionData = try JSONEncoder().encode(data.nutrition)
         ingredients = data.ingredients.map { RecipeIngredient($0) }
     }
     func value() throws -> RecipeData {
         .init(id: id, name: name, symbol: symbol, servings: servings, minutes: minutes,
               difficulty: difficulty, nutrition: try JSONDecoder().decode(Nutrients.self, from: nutritionData),
-              ingredients: ingredients.map(\.value), steps: steps)
+              ingredients: ingredients.map(\.value), steps: steps,
+              sources: sourcesData.flatMap { try? JSONDecoder().decode([RecipeSource].self, from: $0) })
     }
 }
 

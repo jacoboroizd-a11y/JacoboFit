@@ -57,8 +57,8 @@ private struct SettingsForm: View {
                 NavigationLink("Privacidad y eliminar datos") { PrivacyView() }
             }
             Section("Acerca de JacoboFit") {
-                Text("Demo local · sin cuenta ni API key").font(.headline)
-                Text("Las fotos y registros permanecen en el dispositivo. El modo demo no envía imágenes ni datos a ningún servidor. Las funciones remotas de IA todavía no están habilitadas.").font(.footnote)
+                Text("Tus registros se guardan localmente").font(.headline)
+                Text("Las fotos y registros permanecen en el dispositivo. El análisis de fotos es demo. Para recetas, copiás el pedido a tu cliente de ChatGPT y pegás su respuesta aquí. JacoboFit no se conecta a una API.").font(.footnote)
                 Text("Las estimaciones nutricionales no son mediciones médicas.").font(.footnote).foregroundStyle(.secondary)
             }
         }

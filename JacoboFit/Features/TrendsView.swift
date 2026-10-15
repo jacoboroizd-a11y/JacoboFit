@@ -37,6 +37,6 @@ struct TrendsView: View {
                 }
                 Text("Los días sin registros no se cuentan como cero. El historial de actividad y balance de Health se incorporará en una etapa posterior.").font(.footnote).foregroundStyle(.secondary)
             }.padding()
-        }.background(Color(.systemGroupedBackground)).navigationTitle("Tendencias")
+        }.background { AppBackdrop() }.navigationTitle("Tendencias")
     }
 }

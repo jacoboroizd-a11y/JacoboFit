@@ -57,7 +57,11 @@ struct RecipeEditorView: View {
         do {
             draft.steps = stepsText.components(separatedBy: .newlines).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
             try draft.validate()
+            if existing?.isDraft == true && (draft.nutrition.calories <= 0 || draft.steps.contains(where: { $0.hasPrefix("Borrador:") })) {
+                throw NutritionError.invalidValue("completá los pasos y la estimación de calorías del borrador")
+            }
             if let existing {
+                existing.isDraft = false
                 existing.name = draft.name; existing.servings = draft.servings; existing.minutes = draft.minutes
                 existing.difficulty = draft.difficulty; existing.steps = draft.steps
                 existing.nutritionData = try JSONEncoder().encode(draft.nutrition)

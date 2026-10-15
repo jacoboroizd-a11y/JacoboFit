@@ -28,7 +28,7 @@ struct MealLoggingView: View {
                     if draft.photo != nil { FoodImage(data: draft.photo, height: 210) }
                     HStack {
                         Button { Task { await openCamera() } } label: { Label("Tomar foto", systemImage: "camera") }
-                            .buttonStyle(.borderedProminent)
+                            .primaryActionStyle()
                         PhotosPicker(selection: $selectedPhoto, matching: .images) { Label("Elegir", systemImage: "photo") }
                             .buttonStyle(.bordered)
                     }.disabled(draft.isAnalyzing || isLoadingPhoto)
@@ -46,7 +46,7 @@ struct MealLoggingView: View {
                                 .fontWeight(.semibold)
                             Spacer(); Image(systemName: "sparkles")
                         }.padding(.vertical, 10)
-                    }.buttonStyle(.borderedProminent).disabled(draft.isAnalyzing || isLoadingPhoto)
+                    }.primaryActionStyle().disabled(draft.isAnalyzing || isLoadingPhoto)
                     Button("Prefiero registrar manualmente") { showManual = true }.font(.subheadline)
                 }
                 HStack { Text("Tu historial").font(.title2.bold()); Spacer(); Text("\(meals.count) comidas").foregroundStyle(.secondary) }
@@ -63,7 +63,7 @@ struct MealLoggingView: View {
                         .font(.subheadline.bold()).foregroundStyle(.secondary)
                 }
             }.padding()
-        }.background(Color(.systemGroupedBackground)).navigationTitle("Registro")
+        }.background { AppBackdrop() }.navigationTitle("Registro")
         .onChange(of: selectedPhoto) { _, item in
             Task {
                 isLoadingPhoto = true

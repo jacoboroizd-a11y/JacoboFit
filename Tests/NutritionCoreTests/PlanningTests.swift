@@ -52,6 +52,14 @@ final class PlanningTests: XCTestCase {
             XCTAssertEqual(scaled.nutrition.calories, recipe.nutrition.calories * 2 / Double(recipe.servings))
         }
     }
+    func testFoodListIngredientsConsolidateAcrossTwoDifferentDishes() throws {
+        let first = recipe()
+        var second = recipe(); second.id = UUID(); second.name = "Otra comida"
+        second.ingredients = [.init(name: " Pollo ", quantity: 200, unit: "g", category: "proteínas")]
+        let result = try GroceryService.list(for: [.init(recipe: first, portions: 2), .init(recipe: second, portions: 2)])
+        XCTAssertEqual(result.first { $0.name == "pollo" }?.quantity, 600)
+        XCTAssertEqual(result.first { $0.name == "tomate" }?.quantity, 2)
+    }
     func testEmptyPlanHasEmptyGroceryList() throws { XCTAssertTrue(try GroceryService.list(for: []).isEmpty) }
 }
 

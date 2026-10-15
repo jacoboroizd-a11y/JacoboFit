@@ -5,7 +5,8 @@ final class MealFlowTests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing"]
         app.launch()
-        app.tabBars.buttons["Registro"].tap()
+        app.tabBars.buttons["Comida"].tap()
+        app.buttons["Registrar comida con foto"].tap()
         app.buttons["Analizar comida"].tap()
         XCTAssertTrue(app.navigationBars["Revisá tu comida"].waitForExistence(timeout: 10))
         app.swipeUp()

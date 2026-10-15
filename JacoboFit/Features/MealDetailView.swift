@@ -40,7 +40,7 @@ struct MealDetailView: View {
                 } }
                 Button("Eliminar comida", role: .destructive) { confirmDelete = true }
             }.padding()
-        }.background(Color(.systemGroupedBackground)).navigationTitle("Detalle").navigationBarTitleDisplayMode(.inline)
+        }.background { AppBackdrop() }.navigationTitle("Detalle").navigationBarTitleDisplayMode(.inline)
         .confirmationDialog("¿Eliminar esta comida y su foto?", isPresented: $confirmDelete, titleVisibility: .visible) {
             Button("Eliminar", role: .destructive) {
                 context.delete(meal)

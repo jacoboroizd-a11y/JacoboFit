@@ -4,64 +4,94 @@ import NutritionCore
 
 struct WeekView: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Query(sort: \CalendarDay.date) private var days: [CalendarDay]
     @Query(sort: \Recipe.name) private var recipes: [Recipe]
-    @State private var weekOffset = 0
-    @State private var selectedDay: Date?
+    @State private var selectedDate = Calendar.current.startOfDay(for: Date.now)
+    @State private var displayedDate = Date.now
+    @State private var mode = "Mes"
+    @State private var showWorkout = false
     @State private var showGrocery = false
     @State private var showRecipePicker = false
     @State private var recipeToPlan: RecipeData?
+    @State private var pendingRecipe: RecipeData?
     @State private var error: String?
-    private var weekStart: Date { WeekDates.monday(containing: Calendar.current.date(byAdding: .weekOfYear, value: weekOffset, to: .now)!) }
-    private var dates: [Date] { (0..<7).map { Calendar.current.date(byAdding: .day, value: $0, to: weekStart)! } }
-    private var weekDays: [CalendarDay] { days.filter { $0.date >= weekStart && $0.date < Calendar.current.date(byAdding: .day, value: 7, to: weekStart)! } }
+    private var dates: [Date] { mode == "Mes" ? CalendarGrid.month(containing: displayedDate) : CalendarGrid.week(containing: displayedDate) }
+    private var weekStart: Date { WeekDates.monday(containing: selectedDate) }
+    private var weekDays: [CalendarDay] { days.filter { CalendarGrid.week(containing: selectedDate).contains(Calendar.current.startOfDay(for: $0.date)) } }
+    private var selectedDay: CalendarDay? { day(for: selectedDate) }
+    private var selectedMeals: [PlannedMeal] {
+        (selectedDay?.meals ?? []).sorted { categoryOrder($0.category) < categoryOrder($1.category) }
+    }
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Una semana\na tu ritmo.").font(.largeTitle.bold())
-                HStack {
-                    Button { weekOffset -= 1 } label: { Image(systemName: "chevron.left") }.accessibilityLabel("Semana anterior")
-                    Spacer(); Text(weekStart.formatted(.dateTime.day().month(.wide))).font(.headline); Spacer()
-                    Button { weekOffset += 1 } label: { Image(systemName: "chevron.right") }.accessibilityLabel("Semana siguiente")
-                }
-                Button("Crear lista del súper", systemImage: "basket") { showGrocery = true }.buttonStyle(.borderedProminent)
-                Text("Planificación manual en modo demo. Elegí tus recetas y entrenamientos; la generación de semanas con IA llegará en la fase 2.").font(.footnote).foregroundStyle(.secondary)
-                ForEach(dates, id: \.self) { date in
-                    let day = days.first { Calendar.current.isDate($0.date, inSameDayAs: date) }
-                    Surface {
-                        HStack {
-                            Text(date.formatted(.dateTime.weekday(.wide).day())).font(.title3.bold())
-                            Spacer()
-                            if Calendar.current.isDateInToday(date) { Text("HOY").font(.caption.bold()).foregroundStyle(.teal) }
-                        }
-                        Button { selectedDay = date } label: { Label(day?.workout ?? "Añadir entrenamiento", systemImage: "figure.strengthtraining.traditional") }
-                        if let day {
-                            ForEach(day.meals.sorted { $0.category < $1.category }) { plan in
-                                HStack(alignment: .top) {
-                                    Image(systemName: symbol(plan.category)).foregroundStyle(.teal).frame(width: 24)
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(plan.category).font(.caption).foregroundStyle(.secondary)
-                                        Text(plan.recipe?.name ?? "Receta no disponible").font(.headline)
-                                        Text("\(plan.portions) porción(es)").font(.caption).foregroundStyle(.secondary)
-                                    }
-                                    Spacer()
-                                    Button(role: .destructive) { context.delete(plan); save() } label: { Image(systemName: "minus.circle") }.accessibilityLabel("Eliminar \(plan.recipe?.name ?? "comida") del plan")
-                                }
-                            }
-                        }
-                        Button("Agregar comida", systemImage: "plus") {
-                            selectedPlanDate = date; showRecipePicker = true
-                        }
+            VStack(alignment: .leading, spacing: 22) {
+                Text("Tu semana,\na simple vista.").font(.largeTitle.bold())
+                Picker("Vista del calendario", selection: $mode) {
+                    Text("Mes").tag("Mes"); Text("Semana").tag("Semana")
+                }.pickerStyle(.segmented)
+                Surface {
+                    HStack {
+                        Button { move(-1) } label: { Image(systemName: "chevron.left").padding(10) }
+                            .accessibilityLabel("Período anterior")
+                        Spacer()
+                        Text(displayedDate.formatted(.dateTime.month(.wide).year())).font(.headline).textCase(.uppercase)
+                        Spacer()
+                        Button { move(1) } label: { Image(systemName: "chevron.right").padding(10) }
+                            .accessibilityLabel("Período siguiente")
                     }
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 7), spacing: 8) {
+                        ForEach(Array(["L", "M", "M", "J", "V", "S", "D"].enumerated()), id: \.offset) { _, name in
+                            Text(name).font(.caption.bold()).foregroundStyle(.secondary).accessibilityHidden(true)
+                        }
+                        ForEach(dates, id: \.self) { date in dateCell(date) }
+                    }
+                    HStack(spacing: 14) {
+                        Label("Comidas", systemImage: "circle.fill").foregroundStyle(.teal)
+                        Label("Entrenamiento", systemImage: "circle.fill").foregroundStyle(.orange)
+                        Spacer()
+                        Button("Hoy") { selectedDate = Calendar.current.startOfDay(for: .now); displayedDate = .now }
+                    }.font(.caption)
                 }
+                Surface {
+                    HStack {
+                        Text(selectedDate.formatted(.dateTime.weekday(.wide).day().month())).font(.title3.bold())
+                        Spacer()
+                        if Calendar.current.isDateInToday(selectedDate) { Text("HOY").font(.caption.bold()).foregroundStyle(.teal) }
+                    }
+                    Button { showWorkout = true } label: { Label(selectedDay?.workout ?? "Añadir entrenamiento", systemImage: "figure.strengthtraining.traditional") }
+                    if selectedMeals.isEmpty {
+                        Label("Un día por planear", systemImage: "fork.knife").font(.headline).padding(.top, 8)
+                        Text("Elegí una receta para empezar. Las comidas aparecen marcadas en la cuadrícula.").font(.subheadline).foregroundStyle(.secondary)
+                    }
+                    ForEach(selectedMeals) { plan in
+                        HStack(alignment: .top, spacing: 12) {
+                            Image(systemName: symbol(plan.category)).foregroundStyle(.teal).frame(width: 24)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(plan.category).font(.caption).foregroundStyle(.secondary)
+                                Text(plan.recipe?.name ?? "Receta no disponible").font(.headline)
+                                Text("\(plan.portions) porción(es)").font(.caption).foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Button(role: .destructive) { context.delete(plan); save() } label: { Image(systemName: "minus.circle") }
+                                .accessibilityLabel("Eliminar \(plan.recipe?.name ?? "comida") del plan")
+                        }.padding(.vertical, 6)
+                    }
+                    Button("Agregar comida", systemImage: "plus") { showRecipePicker = true }.primaryActionStyle()
+                }
+                Button { showGrocery = true } label: {
+                    Surface {
+                        Label("Lista del súper", systemImage: "basket").font(.headline)
+                        Text("Semana del \(weekStart.formatted(.dateTime.day().month())) · según tus porciones")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                }.buttonStyle(.plain)
             }.padding()
-        }.background(Color(.systemGroupedBackground)).navigationTitle("Calendario").navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: Binding(get: { selectedDay != nil }, set: { if !$0 { selectedDay = nil } })) {
-            if let selectedDay { NavigationStack { WorkoutEditorView(date: selectedDay) } }
-        }
+        }.background { AppBackdrop() }.navigationTitle("Calendario").navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showWorkout) { NavigationStack { WorkoutEditorView(date: selectedDate) } }
         .sheet(isPresented: $showGrocery) { NavigationStack { GroceryView(days: weekDays, weekStart: weekStart) } }
         .sheet(isPresented: $showRecipePicker, onDismiss: {
-            if pendingRecipe != nil { recipeToPlan = pendingRecipe; pendingRecipe = nil }
+            if let pendingRecipe { recipeToPlan = pendingRecipe; self.pendingRecipe = nil }
         }) {
             NavigationStack {
                 List {
@@ -76,11 +106,45 @@ struct WeekView: View {
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { showRecipePicker = false } } }
             }
         }
-        .sheet(item: $recipeToPlan) { recipe in NavigationStack { PlanMealView(recipe: recipe, initialDate: selectedPlanDate) } }
+        .sheet(item: $recipeToPlan) { recipe in NavigationStack { PlanMealView(recipe: recipe, initialDate: selectedDate) } }
         .alert("Calendario", isPresented: Binding(get: { error != nil }, set: { if !$0 { error = nil } })) { Button("Cerrar") { error = nil } } message: { Text(error ?? "") }
     }
-    @State private var selectedPlanDate = Date.now
-    @State private var pendingRecipe: RecipeData?
+    private func dateCell(_ date: Date) -> some View {
+        let entry = day(for: date)
+        let mealCount = entry?.meals.count ?? 0
+        let selected = Calendar.current.isDate(date, inSameDayAs: selectedDate)
+        let inMonth = Calendar.current.isDate(date, equalTo: displayedDate, toGranularity: .month)
+        let workout = entry.map { !$0.workout.isEmpty && $0.workout != "Descanso" } ?? false
+        return Button {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.18)) {
+                selectedDate = date
+                if !inMonth { displayedDate = date }
+            }
+        } label: {
+            VStack(spacing: 5) {
+                Text(date.formatted(.dateTime.day())).font(.body.weight(selected ? .bold : .medium))
+                HStack(spacing: 3) {
+                    if !(entry?.meals.isEmpty ?? true) { Circle().fill(selected ? Color.white : .teal).frame(width: 5, height: 5) }
+                    if workout { Circle().fill(selected ? Color.white : .orange).frame(width: 5, height: 5) }
+                }.frame(height: 6)
+                Text(mealCount > 0 ? "\(mealCount)" : " ")
+                    .font(.system(size: 10)).accessibilityHidden(true)
+            }
+            .frame(maxWidth: .infinity).frame(minHeight: 62)
+            .foregroundStyle(selected ? Color.white : inMonth ? Color.primary : Color.secondary)
+            .background(selected ? Color.teal : Calendar.current.isDateInToday(date) ? Color.teal.opacity(0.13) : Color.clear, in: RoundedRectangle(cornerRadius: 16))
+        }.buttonStyle(.plain)
+            .accessibilityLabel("\(date.formatted(date: .complete, time: .omitted)), \(entry?.meals.count ?? 0) comidas\(workout ? ", entrenamiento: " + (entry?.workout ?? "") : "")")
+            .accessibilityAddTraits(selected ? [.isSelected] : [])
+            .accessibilityIdentifier(Calendar.current.isDateInToday(date) ? "calendar-today" : "calendar-day-\(date.timeIntervalSince1970)")
+    }
+    private func day(for date: Date) -> CalendarDay? { days.first { Calendar.current.isDate($0.date, inSameDayAs: date) } }
+    private func move(_ delta: Int) {
+        let component: Calendar.Component = mode == "Mes" ? .month : .weekOfYear
+        guard let next = Calendar.current.date(byAdding: component, value: delta, to: displayedDate) else { return }
+        displayedDate = next; selectedDate = Calendar.current.startOfDay(for: next)
+    }
+    private func categoryOrder(_ category: String) -> Int { ["Desayuno", "Almuerzo", "Cena", "Snack"].firstIndex(of: category) ?? 4 }
     private func symbol(_ category: String) -> String {
         switch category { case "Desayuno": "sun.max"; case "Almuerzo": "fork.knife"; case "Cena": "moon"; default: "carrot" }
     }

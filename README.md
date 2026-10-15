@@ -1,6 +1,8 @@
 # JacoboFit · MVP nativo para iPhone
 
-Copiloto nutricional en SwiftUI, SwiftData y Swift Charts. iOS 17+, Xcode 16.4, Swift 6 para el paquete de cálculos. Funciona sin servidor, sin API key y sin autorizar Apple Health.
+Copiloto nutricional en SwiftUI, SwiftData y Swift Charts. iOS 17+, Xcode 16.4, Swift 6 para el paquete de cálculos. El registro local/demo funciona sin servidor, sin API key y sin autorizar Apple Health. Las recetas con IA usan un intercambio manual con tu cliente de ChatGPT: preparar pedido, copiar y abrir ChatGPT, pegar la respuesta y revisar.
+
+**Novedades y pasos para actualizar:** [EMPEZAR.md](EMPEZAR.md).
 
 ## Abrirlo en tu Mac
 
@@ -9,16 +11,16 @@ Copiloto nutricional en SwiftUI, SwiftData y Swift Charts. iOS 17+, Xcode 16.4, 
 3. En la barra superior elegí el esquema **JacoboFit** y un **iPhone Simulator** (por ejemplo, iPhone 16 con iOS 18.5). No elijas “Any iOS Device”.
 4. Presioná **⌘R**. Si falta el simulador, descargá iOS en **Xcode → Settings → Components**.
 
-No hace falta Homebrew, XcodeGen, CocoaPods ni una cuenta de OpenAI. El paquete `NutritionCore` es local; no descarga dependencias externas. Conservá la carpeta completa: abrir solo un archivo Swift o `Package.swift` no ejecuta la app iOS.
+Para el modo local no hace falta Homebrew, XcodeGen, CocoaPods ni una cuenta de OpenAI. Para recetas podés usar tu cliente y suscripción de ChatGPT sin configurar un backend ni claves de API en JacoboFit. El paquete `NutritionCore` es local; no descarga dependencias externas. Conservá la carpeta completa: abrir solo un archivo Swift o `Package.swift` no ejecuta la app iOS.
 
 Para probar en tu iPhone físico: conectalo, activá Developer Mode cuando iOS lo solicite, agregá tu Apple ID en Xcode → Settings → Accounts y seleccioná tu equipo en **Signing & Capabilities**. Usá un bundle identifier propio si Apple rechaza el predeterminado. La capacidad HealthKit requiere que tu equipo de firma la admita; el simulador permite desarrollar el modo demo sin configurar una cuenta de pago.
 
 ## Primera prueba
 
-- En **Registro**, elegí una foto o tocá **Analizar comida** para usar el ejemplo sin foto.
+- En **Comida → Registrar comida con foto**, elegí una foto o tocá **Analizar comida** para usar el ejemplo sin foto.
 - El demo devuelve siempre una muestra de tacos, **no analiza la imagen**. Está indicado en la pantalla y en el análisis.
 - Tocá una tortilla y cambiá la cantidad; agregá aceite o manteca si corresponde. Se recalculan calorías, macros y rango.
-- Guardá. La comida aparece en **Hoy** y en el historial de **Registro**.
+- Guardá. La comida aparece en **Hoy** y en el historial del registro de **Comida**.
 - En **Recetas**, cargá los nueve ejemplos editables. Abrí una receta y elegí **Agregar al calendario**.
 - En **Calendario**, elegí tu entrenamiento y generá la lista del súper. Marcá los productos comprados.
 - Cerrá y abrí la app: los registros se conservan localmente.
@@ -27,7 +29,10 @@ En el simulador no hay cámara física: usá **Elegir**. Podés arrastrar una im
 
 ## Implementado
 
-- Cuatro tabs: Hoy, Registro, Calendario y Recetas.
+- Lista editable de platos en Comida, con ingredientes, cantidades y porciones; borradores automáticos en Recetas.
+- Checklist del súper desde la lista de Comida, separado del checklist semanal del calendario.
+- Fuentes citadas en recetas importadas y búsquedas por ingredientes en MyPlate/NHS. Los enlaces se conservan sin afirmar que estén verificados.
+- Cuatro tabs: Hoy, Comida, Calendario y Recetas.
 - Registro por cámara, biblioteca o descripción, análisis mock asíncrono y registro manual.
 - Revisión de nombre, categoría, fecha, cantidades, marcas, preparación y nutrición por unidad; altas/bajas de componentes y grasas rápidas con porciones.
 - Fotos locales redimensionadas, análisis original y correcciones guardados por separado con SwiftData.
@@ -35,7 +40,9 @@ En el simulador no hay cámara física: usá **Elegir**. Podés arrastrar una im
 - Dashboard con calorías, progreso de proteína, macros, balance estimado, agua y peso.
 - HealthKit opcional: energía activa/en reposo, pasos, distancia, ejercicio, entrenamientos y último peso. No escribe en Health.
 - Recetas editables, favoritas, escalado de ingredientes y macros, registro y planificación.
-- Calendario semanal manual, entrenamientos y copias de recetas planificadas.
+- Calendario mensual/semanal en cuadrícula, marcas de comidas y entrenamientos, detalle del día y copias de recetas planificadas.
+- Materiales translúcidos accesibles con Xcode 16.4; Liquid Glass nativo y botones glass al compilar con Xcode 26 y ejecutar en iOS 26.
+- Recetas desde un pedido libre, porciones y tiempo: la app prepara un pedido para tu cliente de ChatGPT e importa su respuesta JSON pegada manualmente. No accede a tu cuenta ni consume una API.
 - Lista del súper que consolida ingredientes por nombre, categoría y unidad, ajustada a porciones; compras persistentes por semana.
 - Productos frecuentes reutilizables al editar un alimento.
 - Tendencias de comidas, proteína y pesos de 7/30/90 días. Los días sin datos no se cuentan como cero.
@@ -89,16 +96,16 @@ docker run --rm -v "$PWD:/project" -w /project swift:6.0.3 swift test --jobs 4
 - `Tests/NutritionCoreTests`: pruebas independientes de Apple.
 - `JacoboFitTests`, `JacoboFitUITests`: pruebas para Xcode.
 - `JacoboFit/Resources/DemoRecipes.json`: datos iniciales editables; se cargan solo por decisión del usuario. IDs estables evitan duplicados al volver a cargar ejemplos.
-- `Backend/AIProxy`: contrato y trabajo pendiente para fase 2.
+- `Backend/AIProxy`: contrato de referencia para una posible fase futura. No se usa para el intercambio manual con ChatGPT.
 
 El proyecto Xcode ya viene generado y versionable. Para regenerarlo después de agregar archivos, ejecutá `python3 scripts/generate_project.py` o agregalos manualmente desde Xcode. El generador reemplaza el proyecto completo: guardá antes cualquier ajuste manual de firma o build.
 
 ## Fase 2 pendiente
 
-- Backend autenticado, control de cuotas y llamadas reales a OpenAI; consentimiento antes de enviar imágenes y política de retención.
-- Escaneo de etiquetas, correcciones conversacionales, reconocimiento de comidas frecuentes y generación de recetas/semana con IA.
+- Alojamiento HTTPS y autenticación multiusuario para producción; cuotas persistentes y política de retención antes de habilitar envíos de imágenes.
+- Escaneo de etiquetas, correcciones conversacionales, reconocimiento de comidas frecuentes y generación de semanas con IA.
 - Historial de actividad/balance y frecuencia cardiaca de entrenamientos si el usuario elige compartirla.
 - Widgets, App Intents, Apple Watch y Live Activities.
 - Revisión visual en simulador/dispositivo, icono definitivo, pruebas de VoiceOver y preparación de App Store.
 
-`RemoteAIService` contiene el cliente HTTPS del análisis de comidas, con validación de respuesta; **no se activa en la app demo y no hay backend desplegado**. El resto de operaciones remotas devuelve explícitamente “no implementada”. No se guardan claves privadas de OpenAI en el cliente.
+`ChatGPTRecipeExchange` prepara el pedido y valida la receta JSON pegada desde tu cliente ChatGPT. El intercambio es manual y el usuario controla su cuenta. El análisis de fotos conserva su mock. `RemoteAIService` se mantiene solo como base para otra posible integración: no se activa y no hay backend desplegado. No se guardan claves privadas de OpenAI en el cliente.

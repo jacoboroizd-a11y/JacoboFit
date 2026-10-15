@@ -29,6 +29,23 @@ import NutritionCore
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<MealItem>()), 0)
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<AIAnalysis>()), 0)
     }
+    func testFoodListDraftFlagsSourcesAndIngredientsSurvivePersistence() throws {
+        let container = try container()
+        let context = ModelContext(container)
+        let data = RecipeData(name: "Pollo cocido", servings: 2, nutrition: .zero,
+            ingredients: [.init(name: "Pollo", quantity: 300, unit: "g", category: "proteínas")],
+            steps: ["Borrador pendiente"], sources: [.init(title: "MyPlate", url: URL(string: "https://www.myplate.gov/recipes")!)])
+        let recipe = try Recipe(data)
+        recipe.inFoodList = true; recipe.shoppingServings = 4; recipe.isDraft = true
+        context.insert(recipe); try context.save()
+        let reader = ModelContext(container)
+        let saved = try XCTUnwrap(reader.fetch(FetchDescriptor<Recipe>()).first)
+        XCTAssertTrue(saved.inFoodList); XCTAssertTrue(saved.isDraft)
+        XCTAssertEqual(saved.shoppingServings, 4)
+        XCTAssertEqual(try saved.value().sources?.first?.url.host, "www.myplate.gov")
+        let shopping = try GroceryService.list(for: [.init(recipe: saved.value(), portions: saved.shoppingServings)])
+        XCTAssertEqual(shopping[0].quantity, 600)
+    }
     func testCalendarSnapshotSurvivesDeletingSourceRecipe() throws {
         let container = try container()
         let context = ModelContext(container)

@@ -69,6 +69,17 @@
 			"isa" = "PBXBuildFile";
 			"fileRef" = "6C44FB55FA34189DBFE27008";
 		};
+		"D90845312D05BE2F53178C5E" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"name" = "FoodListView.swift";
+			"path" = "JacoboFit/Features/FoodListView.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"A878AFF61671B548D95038EE" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "D90845312D05BE2F53178C5E";
+		};
 		"EC33CD4908F9A1C41ED6A5DC" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
@@ -124,6 +135,17 @@
 			"isa" = "PBXBuildFile";
 			"fileRef" = "773253B9AD4955B58C562336";
 		};
+		"F01B6CB66CD14B57E6C7EDAF" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"name" = "RecipeComposerView.swift";
+			"path" = "JacoboFit/Features/RecipeComposerView.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"690F9C238042A6DAAFF3F508" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F01B6CB66CD14B57E6C7EDAF";
+		};
 		"A12549752E9686243A9085FC" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
@@ -134,6 +156,17 @@
 		"18D5D4EFF3A55FA71F2A3AA7" = {
 			"isa" = "PBXBuildFile";
 			"fileRef" = "A12549752E9686243A9085FC";
+		};
+		"6E166C63D971FEA9E4D28335" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"name" = "RecipeInternetSourcesView.swift";
+			"path" = "JacoboFit/Features/RecipeInternetSourcesView.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"82EBD4DBA48C7616B6AF9283" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "6E166C63D971FEA9E4D28335";
 		};
 		"8617640552A60CE41A63A516" = {
 			"isa" = "PBXFileReference";
@@ -257,12 +290,15 @@
 				"17B8DCBA87117F43694B97F1",
 				"C74E8E5BD768C71480F4B194",
 				"6C44FB55FA34189DBFE27008",
+				"D90845312D05BE2F53178C5E",
 				"EC33CD4908F9A1C41ED6A5DC",
 				"B9F9A548685FB43BB979788C",
 				"ED4A5AB35BD710852189C5D9",
 				"1166F979908911847CD9406C",
 				"773253B9AD4955B58C562336",
+				"F01B6CB66CD14B57E6C7EDAF",
 				"A12549752E9686243A9085FC",
+				"6E166C63D971FEA9E4D28335",
 				"8617640552A60CE41A63A516",
 				"C4D3C80F3521938C9534E601",
 				"ED8EAF0B1117B5242A33DAFC",
@@ -293,12 +329,15 @@
 				"BF8C9F676EA8830D68CC506D",
 				"AA5EDF99DBB80E5DA9645507",
 				"F59B299ED98EDF2BDBC48072",
+				"A878AFF61671B548D95038EE",
 				"78F062AF429928B1221EA69F",
 				"1B7C2EA772261ABB750E7533",
 				"E270C094F6137A17E165FAED",
 				"AEA5B97D81852B0F3CBA2FE9",
 				"78A4623F3A5184DE4BF0C580",
+				"690F9C238042A6DAAFF3F508",
 				"18D5D4EFF3A55FA71F2A3AA7",
+				"82EBD4DBA48C7616B6AF9283",
 				"E4B41C6BC69AFE57908840C8",
 				"86E8114AE14F6F30B6EABF07",
 				"1FAF9457005E398B4E126441",
@@ -545,11 +584,23 @@
 			"isa" = "PBXBuildFile";
 			"fileRef" = "B26CD00414F7C2A58EC4FFF3";
 		};
+		"01AF04677D1D11F139E63856" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"name" = "RecipeCalendarTests.swift";
+			"path" = "JacoboFitUITests/RecipeCalendarTests.swift";
+			"sourceTree" = "SOURCE_ROOT";
+		};
+		"A3ED6180999C4D197BC3D9AD" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "01AF04677D1D11F139E63856";
+		};
 		"0370DC650A8A63F10891086E" = {
 			"isa" = "PBXGroup";
 			"name" = "JacoboFitUITests";
 			"children" = (
 				"B26CD00414F7C2A58EC4FFF3",
+				"01AF04677D1D11F139E63856",
 			);
 			"sourceTree" = "<group>";
 		};
@@ -565,6 +616,7 @@
 			"buildActionMask" = 2147483647;
 			"files" = (
 				"DA3B4770DEDAE59A4ADCAA03",
+				"A3ED6180999C4D197BC3D9AD",
 			);
 			"runOnlyForDeploymentPostprocessing" = 0;
 		};

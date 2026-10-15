@@ -95,7 +95,7 @@ struct DashboardView: View {
                 }
                 NavigationLink { TrendsView() } label: { Label("Ver tendencias", systemImage: "chart.xyaxis.line").font(.headline).frame(maxWidth: .infinity).padding() }.buttonStyle(.bordered)
             }.padding().padding(.bottom, 72)
-        }.background(Color(.systemGroupedBackground)).navigationTitle("Hoy").navigationBarTitleDisplayMode(.inline)
+        }.background { AppBackdrop() }.navigationTitle("Hoy").navigationBarTitleDisplayMode(.inline)
         .overlay(alignment: .bottomTrailing) {
             Menu {
                 Button("Tomar foto / registrar comida", systemImage: "camera", action: openLogging)
