@@ -1,0 +1,464 @@
+[
+  {
+    "id": "9c6ed4e0-0e77-5654-a5c7-b3aadd3581d3",
+    "name": "Ensalada spicy de atún",
+    "symbol": "leaf.fill",
+    "servings": 1,
+    "minutes": 10,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 340,
+      "protein": 40,
+      "carbs": 18,
+      "fat": 12
+    },
+    "ingredients": [
+      {
+        "id": "1f5c2f71-d707-5422-bae9-eecc64878bb3",
+        "name": "Atún",
+        "quantity": 1,
+        "unit": "lata",
+        "category": "proteínas"
+      },
+      {
+        "id": "83f223ec-6f98-59f2-b17b-be9dac998896",
+        "name": "Pepino",
+        "quantity": 0.5,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "05c98886-5aeb-5737-a754-402ba3a0340e",
+        "name": "Zanahoria",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "0ea55dc0-c632-59b4-a2bc-b6e68ea1ae6f",
+        "name": "Yogurt natural",
+        "quantity": 3,
+        "unit": "cucharada",
+        "category": "otros"
+      },
+      {
+        "id": "add7d0ff-1792-57ba-b62b-b4026e0d9b8e",
+        "name": "Chile",
+        "quantity": 1,
+        "unit": "cucharadita",
+        "category": "otros"
+      }
+    ],
+    "steps": [
+      "Escurrí el atún.",
+      "Picá el pepino y rallá la zanahoria.",
+      "Mezclá el yogurt con chile y uní todo."
+    ]
+  },
+  {
+    "id": "82abd929-97be-587f-89aa-eaa51ec6613d",
+    "name": "Tacos de fajita de res",
+    "symbol": "flame.fill",
+    "servings": 1,
+    "minutes": 25,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 570,
+      "protein": 46,
+      "carbs": 42,
+      "fat": 18
+    },
+    "ingredients": [
+      {
+        "id": "b9789fba-2500-524c-a21b-818e9046061a",
+        "name": "Res magra",
+        "quantity": 170,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "c63d3c75-e267-55f7-a7ad-733acb468d25",
+        "name": "Tortillas de maíz",
+        "quantity": 3,
+        "unit": "unidad",
+        "category": "carbohidratos"
+      },
+      {
+        "id": "c3430dd7-e8cd-592d-a04e-1149d2b2edb4",
+        "name": "Cebolla",
+        "quantity": 0.5,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "a9d8711e-3330-5391-a6dc-8b1989455936",
+        "name": "Jalapeño",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "05e10b94-c6d9-57d3-a2db-00bec54d1632",
+        "name": "Yogurt natural",
+        "quantity": 3,
+        "unit": "cucharada",
+        "category": "otros"
+      }
+    ],
+    "steps": [
+      "Cortá la res y las verduras en tiras.",
+      "Cociná la res en una sartén hasta alcanzar una cocción segura y añadí las verduras.",
+      "Calentá las tortillas y serví con yogurt."
+    ]
+  },
+  {
+    "id": "4f6e3d51-6c46-5a7c-bf4c-f2791afc38f2",
+    "name": "Hamburguesa de lechuga 90/10",
+    "symbol": "fork.knife",
+    "servings": 1,
+    "minutes": 25,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 450,
+      "protein": 42,
+      "carbs": 12,
+      "fat": 25
+    },
+    "ingredients": [
+      {
+        "id": "4dff3cab-e719-5d9a-a4f9-de55662faf09",
+        "name": "Carne molida 90/10",
+        "quantity": 170,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "8c014f8d-b3e7-583b-a140-8ddf5810359f",
+        "name": "Lechuga",
+        "quantity": 4,
+        "unit": "hoja",
+        "category": "vegetales"
+      },
+      {
+        "id": "2e097cf5-a514-55df-b1d1-dc2eb512b6ef",
+        "name": "Tomate",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "bbdfb33a-78d4-5804-8367-6b28bd26258f",
+        "name": "Queso",
+        "quantity": 20,
+        "unit": "g",
+        "category": "otros"
+      }
+    ],
+    "steps": [
+      "Formá una hamburguesa con la carne.",
+      "Cociná completamente el centro de la carne molida a 71 °C.",
+      "Armá con hojas de lechuga, tomate y queso."
+    ]
+  },
+  {
+    "id": "cb080bc7-3581-54a0-b128-df5a57a6b317",
+    "name": "Sopa de pollo",
+    "symbol": "carrot.fill",
+    "servings": 1,
+    "minutes": 40,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 410,
+      "protein": 43,
+      "carbs": 32,
+      "fat": 12
+    },
+    "ingredients": [
+      {
+        "id": "f52a094d-bb70-5da3-a29b-6073c7e01a3d",
+        "name": "Pechuga de pollo",
+        "quantity": 180,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "1acb62e6-3859-5bd1-8ae5-e566510006ab",
+        "name": "Papa",
+        "quantity": 150,
+        "unit": "g",
+        "category": "carbohidratos"
+      },
+      {
+        "id": "68a9fd74-5771-54c6-87f4-77874e69c8e7",
+        "name": "Zanahoria",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "2195c776-01c8-5acf-bef6-fe6925bea5ee",
+        "name": "Cebolla",
+        "quantity": 0.5,
+        "unit": "unidad",
+        "category": "vegetales"
+      }
+    ],
+    "steps": [
+      "Poné el pollo y verduras troceadas en una olla con agua.",
+      "Cociná hasta que el pollo alcance 74 °C y las verduras estén tiernas.",
+      "Desmenuzá el pollo y ajustá las especias."
+    ]
+  },
+  {
+    "id": "8dd49cdb-910a-5334-834b-df5cac5181cb",
+    "name": "Lomo de cerdo con papa y zucchini",
+    "symbol": "flame.fill",
+    "servings": 1,
+    "minutes": 35,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 540,
+      "protein": 48,
+      "carbs": 45,
+      "fat": 19
+    },
+    "ingredients": [
+      {
+        "id": "14a366e4-c28c-56b7-889f-cdb4de212632",
+        "name": "Lomo de cerdo",
+        "quantity": 180,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "728ae367-d713-53ee-8259-e9cae1dceec0",
+        "name": "Papa",
+        "quantity": 200,
+        "unit": "g",
+        "category": "carbohidratos"
+      },
+      {
+        "id": "5f79d913-5d51-5f55-82d1-2acf21cc5d06",
+        "name": "Zucchini",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "5c797d51-3edf-5359-bcfa-265ba6fbd237",
+        "name": "Tomate",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "1e27790a-c937-5df2-a5d7-569ecc4cfa51",
+        "name": "Aceite",
+        "quantity": 1,
+        "unit": "cucharadita",
+        "category": "otros"
+      }
+    ],
+    "steps": [
+      "Cortá las papas y hornealas con el aceite.",
+      "Cociná el lomo a 63 °C en el centro y dejá reposar 3 minutos.",
+      "Salteá el zucchini y serví con tomate."
+    ]
+  },
+  {
+    "id": "70e3fa80-aa93-56e9-8c42-0809642991e6",
+    "name": "Tacos de carne molida",
+    "symbol": "fork.knife",
+    "servings": 1,
+    "minutes": 25,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 550,
+      "protein": 42,
+      "carbs": 40,
+      "fat": 24
+    },
+    "ingredients": [
+      {
+        "id": "e981ab92-9fcf-554d-919d-71dbe016bbe2",
+        "name": "Carne molida 90/10",
+        "quantity": 150,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "b7f8b7a9-ab13-56ba-810a-80711fc247d5",
+        "name": "Tortillas de maíz",
+        "quantity": 3,
+        "unit": "unidad",
+        "category": "carbohidratos"
+      },
+      {
+        "id": "fdecc6fd-92a7-52c9-8682-8bc330b03a65",
+        "name": "Tomate",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "bb2cfd78-98b1-5a98-9302-56df13adde83",
+        "name": "Cebolla",
+        "quantity": 0.5,
+        "unit": "unidad",
+        "category": "vegetales"
+      }
+    ],
+    "steps": [
+      "Cociná completamente la carne molida a 71 °C.",
+      "Añadí tomate y cebolla picados.",
+      "Calentá las tortillas y armá los tacos."
+    ]
+  },
+  {
+    "id": "d2e6b89c-868d-5861-931f-5a4e66e22aae",
+    "name": "Wrap de huevo",
+    "symbol": "sun.max.fill",
+    "servings": 1,
+    "minutes": 15,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 405,
+      "protein": 31,
+      "carbs": 32,
+      "fat": 17
+    },
+    "ingredients": [
+      {
+        "id": "cb368047-b731-5cab-aec6-5e04d28344a5",
+        "name": "Huevo",
+        "quantity": 2,
+        "unit": "unidad",
+        "category": "proteínas"
+      },
+      {
+        "id": "fbb28c85-7450-5c38-aa69-0bd3f24252ff",
+        "name": "Wrap integral",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "carbohidratos"
+      },
+      {
+        "id": "0170f25c-3c5d-595b-8305-a5143cf0d394",
+        "name": "Jamón de pavo",
+        "quantity": 40,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "0bf7d94f-0765-5550-b1a1-6f339a28ad8e",
+        "name": "Tomate",
+        "quantity": 0.5,
+        "unit": "unidad",
+        "category": "vegetales"
+      }
+    ],
+    "steps": [
+      "Batí y cociná los huevos hasta que estén firmes.",
+      "Calentá el wrap y colocá el huevo, jamón y tomate.",
+      "Enrollá y dorá brevemente."
+    ]
+  },
+  {
+    "id": "8d77dcca-fa82-543e-a989-7404eb443274",
+    "name": "Tostadas de huevo",
+    "symbol": "sun.max.fill",
+    "servings": 1,
+    "minutes": 15,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 360,
+      "protein": 25,
+      "carbs": 30,
+      "fat": 15
+    },
+    "ingredients": [
+      {
+        "id": "33f89385-c6aa-5f71-8fe3-0eb0333e0182",
+        "name": "Huevo",
+        "quantity": 2,
+        "unit": "unidad",
+        "category": "proteínas"
+      },
+      {
+        "id": "72efd21b-2712-564c-aff6-f42346fa0a2a",
+        "name": "Pan integral",
+        "quantity": 2,
+        "unit": "rebanada",
+        "category": "carbohidratos"
+      },
+      {
+        "id": "902e8f42-822f-55b0-a6cb-d1eae84f3457",
+        "name": "Tomate",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      }
+    ],
+    "steps": [
+      "Tostá el pan.",
+      "Cociná completamente los huevos a tu gusto.",
+      "Serví con el tomate cortado."
+    ]
+  },
+  {
+    "id": "ae58cad6-16ed-57cd-9ad8-68f5b3c43029",
+    "name": "Pollo air fryer con ensalada",
+    "symbol": "leaf.fill",
+    "servings": 1,
+    "minutes": 25,
+    "difficulty": "Fácil",
+    "nutrition": {
+      "calories": 430,
+      "protein": 52,
+      "carbs": 16,
+      "fat": 17
+    },
+    "ingredients": [
+      {
+        "id": "b748bbff-7c32-54f6-891c-89ce8ad1e49d",
+        "name": "Pechuga de pollo",
+        "quantity": 200,
+        "unit": "g",
+        "category": "proteínas"
+      },
+      {
+        "id": "4f2aea47-8464-5313-9f68-25db9c912d73",
+        "name": "Lechuga",
+        "quantity": 4,
+        "unit": "hoja",
+        "category": "vegetales"
+      },
+      {
+        "id": "86ec6577-d85d-5cd6-8661-ff8715855f04",
+        "name": "Pepino",
+        "quantity": 0.5,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "fe9baf51-a909-5270-b3e2-c8d940b32c57",
+        "name": "Tomate",
+        "quantity": 1,
+        "unit": "unidad",
+        "category": "vegetales"
+      },
+      {
+        "id": "032322e7-560c-5d34-aa83-dfe8c7447a2b",
+        "name": "Aceite",
+        "quantity": 1,
+        "unit": "cucharadita",
+        "category": "otros"
+      }
+    ],
+    "steps": [
+      "Sazoná el pollo y cociná en air fryer hasta alcanzar 74 °C en el centro.",
+      "Lavá y cortá los vegetales.",
+      "Serví con el aceite y limón al gusto."
+    ]
+  }
+]

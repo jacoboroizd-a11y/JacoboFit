@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jacobofit.example/schemas/meal-analysis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mealName",
+    "items",
+    "confidence",
+    "uncertainties",
+    "followUpQuestions",
+    "uncertaintyFraction"
+  ],
+  "properties": {
+    "mealName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "brand",
+          "preparation",
+          "quantity",
+          "unit",
+          "weightGrams",
+          "perUnit",
+          "confidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "brand": {
+            "type": "string"
+          },
+          "preparation": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 10000
+          },
+          "unit": {
+            "type": "string"
+          },
+          "weightGrams": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "perUnit": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "calories",
+              "protein",
+              "carbs",
+              "fat"
+            ],
+            "properties": {
+              "calories": {
+                "type": "number",
+                "minimum": 0
+              },
+              "protein": {
+                "type": "number",
+                "minimum": 0
+              },
+              "carbs": {
+                "type": "number",
+                "minimum": 0
+              },
+              "fat": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "followUpQuestions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertaintyFraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}
