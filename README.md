@@ -77,7 +77,7 @@ docker run --rm -v "$PWD:/project" -w /project swift:6.0.3 swift test --jobs 4
 
 `JacoboFitTests` verifica persistencia, análisis original/corregido, borrado en cascada y supervivencia de la copia planificada al eliminar una receta. `JacoboFitUITests` recorre análisis demo, corrección de cantidad, guardado y dashboard. La prueba UI usa una base temporal en memoria, sin tocar tu historial normal.
 
-**Estado de validación:** ver [VALIDATION.md](VALIDATION.md). La construcción se realizó en Linux; las pruebas iOS y la compilación completa con frameworks Apple requieren ejecutarse en Xcode y todavía no se han comprobado aquí. La configuración de CI para Mac está incluida, pero no se ha enviado ni ejecutado en GitHub.
+**Estado de validación:** ver [VALIDATION.md](VALIDATION.md). La construcción se realizó en Linux; las pruebas iOS y la compilación completa con frameworks Apple requieren ejecutarse en Xcode y todavía no se han comprobado aquí. La configuración de CI para Mac está incluida y el código está en la rama `codex/jacobofit-mvp`; todavía no hay un resultado de CI confirmado.
 
 ## Estructura
 

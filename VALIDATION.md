@@ -1,6 +1,6 @@
 # Validación de esta entrega
 
-Ejecutada en el entorno Linux de desarrollo. Esta entrega no está publicada ni enviada a GitHub.
+Ejecutada en el entorno Linux de desarrollo. El código se guardó en GitHub en la rama `codex/jacobofit-mvp`. No hay un resultado de CI confirmado ni una versión publicada en App Store.
 
 | Comprobación | Resultado |
 | --- | --- |
